@@ -1,0 +1,3 @@
+---
+- name: Install postfix MTA
+  apt: name=postfix state=present

@@ -1,0 +1,4 @@
+.idea
+tools/vagrant/.vagrant
+tools/ansible/.vault-secret-key
+code/app/config/parameters.yml.dist

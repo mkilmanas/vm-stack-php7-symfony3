@@ -1,0 +1,6 @@
+[webservers]
+default    env_tag=dev    resources_dir=dev/resources     ansible_ssh_host=10.45.59.10  ansible_ssh_port=22   ansible_ssh_user=vagrant
+
+
+[dbservers]
+default    env_tag=dev    resources_dir=dev/resources     ansible_ssh_host=10.45.59.10  ansible_ssh_port=22   ansible_ssh_user=vagrant

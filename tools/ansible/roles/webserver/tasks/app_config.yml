@@ -1,0 +1,19 @@
+---
+- name: Prapare parameters.yml.dist
+  template: src=parameters.yml.dist.j2 dest="{{ app_root }}/app/config/parameters.yml.dist"
+
+- name: Install git (pre-requirement for composer)
+  apt: name=git state=present
+
+- name: Install composer
+  shell: "curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer"
+  args:
+    creates: /usr/local/bin/composer
+
+- name: Update composer
+  shell: composer self-update
+
+- name: Install vendor dependencies with composer
+  shell: composer install -n --no-progress
+  args:
+    chdir: "{{ app_root }}"

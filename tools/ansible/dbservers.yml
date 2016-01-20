@@ -1,0 +1,9 @@
+---
+- hosts: dbservers
+  sudo: true
+  roles:
+    - common
+    - dbserver
+  vars_files:
+    - "vars/{{ env_tag }}.yml"
+    - "vars/{{ env_tag }}-vault.yml"

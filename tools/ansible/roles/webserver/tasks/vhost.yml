@@ -1,0 +1,9 @@
+---
+- name: setup vhost in nginx
+  template: src=vhost.conf.j2 dest=/etc/nginx/sites-available/{{ host_name }}.conf
+
+- name: enable our vhost
+  file: src=/etc/nginx/sites-available/{{ host_name }}.conf dest=/etc/nginx/sites-enabled/{{ host_name }}.conf state=link
+
+- name: disable default vhost
+  file: path=/etc/nginx/sites-enabled/default state=absent

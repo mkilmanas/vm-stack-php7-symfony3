@@ -1,0 +1,17 @@
+---
+webserver_ip: 10.45.59.10
+host_name: vm-stack-demo.dev
+app_root: /var/www/vm-stack-demo.dev/
+web_root: /var/www/vm-stack-demo.dev/web/
+directory_index: "app_dev.php index.php"
+default_entry_point: app_dev.php
+db_user: vmstackdemo
+db_password: vmstackdemo
+db_name: vmstackdemo
+dbserver_ip: 127.0.0.1
+dbserver_port: 3306
+mailer_transport: sendmail
+mailer_host: ~
+mailer_user: ~
+mailer_password: ~
+symfony_secret: ldjl3ej13s90x239738*&5pak2s3d456D886712&^83(@DN*(@@SJLKJ@K@X(USA$
