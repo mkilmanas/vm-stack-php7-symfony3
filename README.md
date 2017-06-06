@@ -2,7 +2,7 @@
 
 This is a skeleton setup for a development VM running the following stack:
 
-- Nginx 1.4
+- Nginx 1.10
 - PHP 7.1 (fpm)
 - MariaDB 10.2
 - Postfix MTA
