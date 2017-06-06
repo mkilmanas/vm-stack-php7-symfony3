@@ -1,6 +1,8 @@
 ---
 - name: Update apt cache
-  apt: update_cache=yes
+  apt: update_cache=yes cache_valid_time=43200
+  register: apt_cache
 
 - name: Upgrade software packages
   apt: upgrade=yes
+  when: apt_cache | changed

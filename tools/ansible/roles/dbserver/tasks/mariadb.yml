@@ -1,10 +1,11 @@
 ---
 - name: Add key for extra MariaDB repository
-  #apt_key: url="hkp://keyserver.ubuntu.com:80" id="0xcbcb082a1bb943db" state=present
-  shell: apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
+  apt_key:
+      id: "0xF1656F24C74CD1D8"
+      keyserver: keyserver.ubuntu.com
 
-- name: Add extra repository for MariaDB-10.1
-  apt_repository: repo="deb [arch=amd64,i386] http://mariadb.mirror.serveriai.lt/repo/10.1/ubuntu trusty main" state=present update_cache=yes
+- name: Add extra repository for MariaDB-10.2
+  apt_repository: repo="deb [arch=amd64] http://mariadb.mirror.serveriai.lt/repo/10.2/ubuntu xenial main" state=present update_cache=yes
 
-- name: Install MariaDB-server (10.1)
+- name: Install MariaDB-server (10.2)
   apt: name="mariadb-server" state=present

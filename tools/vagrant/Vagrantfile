@@ -1,22 +1,27 @@
 #!/usr/bin/env ruby
 # ^ Syntax hint
-require 'ffi'
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
-Vagrant.require_version ">= 1.5.0"
+Vagrant.require_version ">= 1.8.0"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  # vagrant-hostsupdater settings
+  # vagrant-hostmanager settings
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_host = true
+  config.hostmanager.manage_guest = true
+
   config.vm.hostname = "vm-stack-demo.dev"
 
   # vagrant-cachier settings
-  config.cache.auto_detect = true
+  if Vagrant.has_plugin?("vagrant-cachier") then
+      config.cache.auto_detect = true
+  end
 
   # Box configuration
-  config.vm.box = 'ubuntu/trusty64'
+  config.vm.box = 'bento/ubuntu-16.04'
   config.vm.box_check_update = false
 
   # Virtualbox specific configuration
@@ -34,10 +39,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Shared folders
     mount_options = ["dmode=777", "fmode=777"]
-    opts = if FFI::Platform::IS_WINDOWS
+    opts = if Vagrant::Util::Platform.windows?
       { :mount_options => mount_options }
-    elsif FFI::Platform::IS_LINUX
-      { :nfs => mount_options, :nfs_version => 4, :nfs_udp => false }
     else
       { :nfs => mount_options }
     end
@@ -49,10 +52,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     )
   end
 
-  config.vm.provision :ansible do |ansible|
-    ansible.playbook = "../ansible/playbook.yml"
-    ansible.inventory_path = "../ansible/inventory/dev"
-    ansible.verbose = "v"
-    ansible.vault_password_file = "../ansible/.vault-secret-key"
+  config.vm.provision :ansible_local do |ansible|
+      ansible.install_mode = "pip"
+      ansible.playbook = "/mnt/project/tools/ansible/playbook.yml"
+      ansible.inventory_path = "/mnt/project/tools/ansible/inventory/dev"
+      ansible.verbose = "v"
+      ansible.vault_password_file = "/mnt/project/tools/ansible/.vault-secret-key"
   end
 end

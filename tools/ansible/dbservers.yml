@@ -1,6 +1,7 @@
 ---
 - hosts: dbservers
-  sudo: true
+  become_method: sudo
+  become: true
   roles:
     - common
     - dbserver

@@ -1,24 +1,35 @@
 ---
-- name: add PPA repository for php7.0
+- name: add PPA repository for php7.x
   apt_repository: repo='ppa:ondrej/php' update_cache=yes
 
-- name: Install php7.0
-  apt: name=php7.0 state=present
+- name: Install php7.1 and minimal set of extensions
+  apt: name="{{ item }}" state="present"
+  with_items:
+      - php7.1
+      - php7.1-fpm
+      - php7.1-curl
+      - php7.1-gd
+      - php7.1-mcrypt
+      - php7.1-intl
+      - php7.1-mysql
+      - php7.1-mbstring
+      - php7.1-zip
+      - php7.1-xml
 
-- name: Install php7.0-fpm
-  apt: name=php7.0-fpm state=present
+- name: Set PHP date.timezone
+  lineinfile: dest="/etc/php/7.1/{{ item }}/php.ini" regexp="date.timezone" line="date.timezone = {{ timezone }}"
+  with_items:
+      - cli
+      - fpm
 
-- name: Install php7.0-curl
-  apt: name=php7.0-curl state=present
+- name: Set PHP realpath_cache_size
+  lineinfile: dest="/etc/php/7.1/{{ item }}/php.ini" regexp="realpath_cache_size" line="realpath_cache_size = 4M"
+  with_items:
+      - cli
+      - fpm
 
-- name: Install php7.0-gd
-  apt: name=php7.0-gd state=present
-
-- name: Install php7.0-mcrypt
-  apt: name=php7.0-mcrypt state=present
-
-- name: Install php7.0-intl
-  apt: name=php7.0-intl state=present
-
-- name: Install php7.0-mysql
-  apt: name=php7.0-mysql state=present
+- name: Set PHP realpath_cache_ttl
+  lineinfile: dest="/etc/php/7.1/{{ item }}/php.ini" regexp="realpath_cache_ttl" line="realpath_cache_ttl = 600"
+  with_items:
+      - cli
+      - fpm

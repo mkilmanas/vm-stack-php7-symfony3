@@ -17,3 +17,4 @@
   shell: composer install -n --no-progress
   args:
     chdir: "{{ app_root }}"
+  become_user: vagrant

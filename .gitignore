@@ -1,4 +1,5 @@
 .idea
 tools/vagrant/.vagrant
 tools/ansible/.vault-secret-key
+tools/ansible/*.retry
 code/app/config/parameters.yml.dist

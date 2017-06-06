@@ -1,6 +1,6 @@
 server {
         listen 80;
-        listen [::]:80 default_server ipv6only=on;
+        #listen [::]:80 default_server ipv6only=on;
 
         root {{ web_root }};
         index {{ directory_index }} index.html index.htm;
@@ -24,7 +24,7 @@ server {
         }
 
         location @handler {
-            rewrite ^(.*) /{{ default_entry_point }}?$1 last;
+            rewrite ^(.*) /{{ directory_index }}?$1 last;
         }
 
         # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
@@ -34,12 +34,9 @@ server {
                 fastcgi_split_path_info ^(.+\.php)(/.+)$;
                 # NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
 
-                # With php5-cgi alone:
-                #fastcgi_pass 127.0.0.1:9000;
-                # With php5-fpm:
-                fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
-                fastcgi_index index.php;
-                include fastcgi_params;
+                fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
+                fastcgi_index {{ directory_index }};
+                include fastcgi.conf;
         }
 
         # deny access to .htaccess files, if Apache's document root
