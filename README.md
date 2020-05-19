@@ -1,3 +1,6 @@
+# OUTDATED & DEPRECATED #
+Potential security vulnerabilities ahead - do not use this repository for anything else then educational purposes.
+
 # VM Stack Demo feat. php7 and Symfony3
 
 This is a skeleton setup for a development VM running the following stack:
